@@ -1,66 +1,112 @@
-# Smart Bus Accident & Passenger Health Monitoring System
-**Public Transport Emergency Intelligence System with Gemini AI**
+# Aegis Transit — Public Transport Emergency Intelligence System
 
-ECE3502 - IoT Domain Analyst | Team: Tanguturi Sharani (22MIS1154) & Sreevallabh (22MIS1170)
+**AMD Slingshot Hackathon 2025** · AI for Social Good & Smart Cities
 
-## What This Is
-A Flutter-based smart transportation safety system that:
-- Reads **bus sensor data** (accelerometer, gyroscope, alcohol, SOS) from CSV files (simulating ESP32 hardware)
-- Reads **passenger health data** (heart rate, HRV, SpO2, motion) from CSV files (simulating smartwatch readings)
-- Uses **Google Gemini AI API** to classify each passenger as Normal / Panic / Critical
-- Provides **real-time analytics** with interactive charts (acceleration timeline, heart rate trends, severity distribution)
-- Generates **emergency severity reports** for prioritized medical response
+A real-time smart bus safety platform that combines onboard sensors, passenger health data, and **RAG-style AI (Groq)** for emergency triage, fleet control, and passenger notifications — so responders know *who* needs help first when every second counts.
 
-## Architecture (4-Layer)
-1. **Bus Accident Detection** — ESP32 + MPU6050 (IMU) + MQ-3 (Alcohol) + SOS Button
-2. **Passenger Health Monitoring** — Smartwatch sensors (HR, HRV, SpO2, motion)
-3. **AI Intelligence Layer** — Google Gemini 2.0 Flash API (replaces local LLM for speed)
-4. **Emergency Response** — Structured severity reports with passenger-wise triage
+---
 
-## Hardware Connections (ESP32)
-| ESP32 Pin | Component | Connection |
-|-----------|-----------|------------|
-| GPIO 21 (SDA) | MPU6050 | SDA |
-| GPIO 22 (SCL) | MPU6050 | SCL |
-| 3.3V | MPU6050 | VCC |
-| GPIO 34 (ADC) | MQ-3 Alcohol | AO (Analog) |
-| 5V (VIN) | MQ-3 Alcohol | VCC |
-| GPIO 15 | SOS Button | Terminal 1 (INPUT_PULLUP) |
-| GND | All | GND |
+## Problem
 
-## CSV Datasets (in `assets/data/`)
-- `bus_sensor_data.csv` — 40 readings: normal driving → sharp brake → collision → post-impact → SOS
-- `passenger_health_data.csv` — 48 readings: 6 passengers × 8 time points (pre/during/post accident)
+In bus emergencies (collisions, medical events), drivers and control rooms lack a single view of **who is at risk** and **in what order** to assist. Passenger vitals and bus telemetry are rarely combined for instant triage, and passengers rarely get clear in-app updates from staff.
+
+## Solution
+
+**Aegis Transit** unifies bus sensors (acceleration, gyro, alcohol, SOS) and passenger health (HR, SpO2, HRV, motion) in one app, with:
+
+- **Passenger app** — Check-in by seat, view your own vitals and bus status, receive staff notifications.
+- **Admin / Fleet Control** — See all passengers, run AI triage (Critical / Panic / Normal + priority order), ask natural-language questions (“Who is critical?”, “How is person A?”) answered from live context (RAG), send in-app notifications, and view time-series charts (HR, SpO2, HRV, motion).
+
+Data flows through **Supabase** (RLS-secured); AI uses **Groq** with retrieved context so answers stay grounded in current data. No secrets in the repo — keys via `.env` or `--dart-define`.
+
+---
+
+## Innovation Themes (AMD Slingshot)
+
+| Theme | How we fit |
+|-------|------------|
+| **AI for Social Good** | Faster, data-driven emergency response and clearer passenger communication during incidents. |
+| **AI for Smart Cities** | Scalable pattern for buses, ferries, or shared transport with real-time fleet and passenger intelligence. |
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| **App** | Flutter (Dart), Material 3, fl_chart |
+| **Backend** | Supabase (PostgreSQL, RLS, optional Realtime) |
+| **AI** | Groq API — RAG-style prompts (retrieve bus + passenger context → generate triage & Q&A) |
+| **Hardware (optional)** | ESP32 + MPU6050 (IMU), MQ-3 (alcohol), SOS button; Bluetooth (Flutter Blue Plus) or CSV import |
+
+---
+
+## Architecture (high level)
+
+1. **Edge / bus** — ESP32 (or CSV) → bus sensor readings; passenger vitals from wearables/CSV.
+2. **Sync** — Flutter app uploads to Supabase (`bus_sensor_readings`, `passenger_health_readings`).
+3. **AI** — Groq: build context from Supabase (bus summary + per-passenger vitals/assessments), fixed system prompt (“answer only from context”), user prompt = context + question/analysis request.
+4. **Roles** — Passenger: own data only. Admin: full fleet view, charts, notify, RAG Q&A.
+5. **Security** — Anon key in client; RLS and optional Supabase Auth for admin; no service role in app.
+
+---
 
 ## Screens
-1. **Login** — Passenger registration (seat, ID, health conditions, route)
-2. **Setup** — CSV data loading + Gemini API key entry
-3. **Dashboard** — Live status, AI analysis trigger, bus/health status
-4. **Health Details** — Per-passenger metrics with line charts (HR, HRV trends)
-5. **Emergency Alert** — Red alert UI with passenger severity report
-6. **Admin Overview** — All passengers seat-wise with AI assessments
-7. **Analytics** — Acceleration timeline, HR comparison, severity pie chart, speed chart
 
-## Run
+| Flow | Screens |
+|------|--------|
+| **Passenger** | Login (warm UI) → Setup (seat, ID, CSV/import) → Dashboard (bus + own health, Run AI, notifications) → Health Details, Emergency (own status only) |
+| **Admin** | Admin Login (control-room UI) → Bus Overview (seat-wise health, Notify) → Passenger sensor charts (HR, SpO2, HRV, motion) → RAG Q&A (Groq) |
+
+---
+
+## Run locally
+
 ```bash
 flutter pub get
 flutter run
 ```
 
-## Secrets (GitHub‑publishable)
-API keys and Supabase credentials are **not** stored in the repo. Use either:
+**Secrets (repo is GitHub-safe):** Copy `.env.example` to `.env`, add your keys, then:
 
-1. **`.env` file (recommended for local dev)**  
-   - Copy `.env.example` to `.env`  
-   - Add your keys (Groq, Supabase URL, Supabase anon key)  
-   - Run: `.\run_with_env.bat` (Windows) or `flutter run` with the script that passes `--dart-define` from `.env`
+- **Windows:** `.\run_with_env.bat`
+- **Or:** `flutter run --dart-define=GROQ_API_KEY=... --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...`
 
-2. **`--dart-define`**  
-   ```bash
-   flutter run --dart-define=GROQ_API_KEY=your_groq_key --dart-define=SUPABASE_URL=your_url --dart-define=SUPABASE_ANON_KEY=your_anon_key
-   ```
+Without keys, the app still runs (CSV fallback; Groq key can be entered in Setup).
 
-If Supabase or Groq keys are missing, the app still runs: it uses CSV fallback and you can enter the Groq key in the Setup screen.
+- **Groq:** [console.groq.com](https://console.groq.com)  
+- **Supabase:** [supabase.com](https://supabase.com) → New project → run `supabase/schema.sql` in SQL Editor → use URL + anon key from Settings → API.
 
-- **Groq API key:** [console.groq.com](https://console.groq.com)  
-- **Supabase:** create a project at [supabase.com](https://supabase.com), run `supabase/schema.sql` in the SQL Editor, then use Settings → API → URL and anon key.
+---
+
+## Hardware (ESP32) — optional
+
+| ESP32 Pin | Component |
+|-----------|-----------|
+| GPIO 21 (SDA), 22 (SCL), 3.3V | MPU6050 (IMU) |
+| GPIO 34 (ADC), 5V | MQ-3 (alcohol) |
+| GPIO 15 | SOS button (INPUT_PULLUP) |
+
+Firmware: `arduino/esp32_bus_sensors/esp32_bus_sensors.ino`. Alternatively use CSV files in `assets/data/` (see `assets/data/README_CSV_FORMATS.md`).
+
+---
+
+## Impact
+
+- **Safer trips** — Real-time view of who is at risk and in what order during accidents or medical events.
+- **Smarter decisions** — AI triage and natural-language Q&A reduce guesswork when time is critical.
+- **Better communication** — Passengers get official in-app notifications instead of word-of-mouth.
+- **Scalable & secure** — Supabase + RLS; same pattern can extend to trains, ferries, and other shared transport.
+
+---
+
+## Team
+
+**AMD Slingshot 2025**  
+Tanguturi Sharani · Sreevallabh
+
+---
+
+## License
+
+See repository for license details.
