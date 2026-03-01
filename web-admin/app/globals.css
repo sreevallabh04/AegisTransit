@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0c1222;
+  --card: #131d33;
+  --border: #1e2d4a;
+  --muted: #64748b;
+  --accent: #10b981;
+  --accent-dim: #059669;
+  --danger: #ef4444;
+  --warn: #f59e0b;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+  background: var(--bg);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--card);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Recharts tooltip */
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}

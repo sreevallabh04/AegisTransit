@@ -1,0 +1,49 @@
+timestamp,seat_number,passenger_id,passenger_name,heart_rate_bpm,hrv_ms,motion_intensity,skin_temp_c,spo2_percent,existing_condition,start_dest,end_dest
+2025-06-15 08:00:00,A01,P-001,Riya Sharma,72,48,0.30,36.5,98,None,City Center,University Gate
+2025-06-15 08:01:00,A01,P-001,Riya Sharma,74,46,0.40,36.5,98,None,City Center,University Gate
+2025-06-15 08:02:00,A01,P-001,Riya Sharma,71,50,0.20,36.5,99,None,City Center,University Gate
+2025-06-15 08:03:00,A01,P-001,Riya Sharma,73,47,0.30,36.5,98,None,City Center,University Gate
+2025-06-15 08:04:00,A01,P-001,Riya Sharma,75,45,0.50,36.5,98,None,City Center,University Gate
+2025-06-15 08:05:15,A01,P-001,Riya Sharma,98,28,1.80,36.7,97,None,City Center,University Gate
+2025-06-15 08:06:00,A01,P-001,Riya Sharma,92,30,1.20,36.6,97,None,City Center,University Gate
+2025-06-15 08:07:00,A01,P-001,Riya Sharma,85,35,0.80,36.6,98,None,City Center,University Gate
+2025-06-15 08:00:00,A02,P-002,Karthik Reddy,80,42,0.40,36.6,97,Asthma,Bus Depot,Tech Park
+2025-06-15 08:01:00,A02,P-002,Karthik Reddy,82,40,0.50,36.6,97,Asthma,Bus Depot,Tech Park
+2025-06-15 08:02:00,A02,P-002,Karthik Reddy,79,43,0.30,36.6,97,Asthma,Bus Depot,Tech Park
+2025-06-15 08:03:00,A02,P-002,Karthik Reddy,81,41,0.40,36.6,97,Asthma,Bus Depot,Tech Park
+2025-06-15 08:04:00,A02,P-002,Karthik Reddy,83,39,0.60,36.7,96,Asthma,Bus Depot,Tech Park
+2025-06-15 08:05:15,A02,P-002,Karthik Reddy,122,18,2.50,36.9,93,Asthma,Bus Depot,Tech Park
+2025-06-15 08:06:00,A02,P-002,Karthik Reddy,118,20,2.00,36.8,94,Asthma,Bus Depot,Tech Park
+2025-06-15 08:07:00,A02,P-002,Karthik Reddy,112,22,1.80,36.8,94,Asthma,Bus Depot,Tech Park
+2025-06-15 08:00:00,A03,P-003,Meera Iyer,68,35,0.20,36.4,97,Heart condition,Railway Station,Central Hospital
+2025-06-15 08:01:00,A03,P-003,Meera Iyer,70,34,0.30,36.4,97,Heart condition,Railway Station,Central Hospital
+2025-06-15 08:02:00,A03,P-003,Meera Iyer,67,36,0.20,36.4,97,Heart condition,Railway Station,Central Hospital
+2025-06-15 08:03:00,A03,P-003,Meera Iyer,69,35,0.20,36.4,97,Heart condition,Railway Station,Central Hospital
+2025-06-15 08:04:00,A03,P-003,Meera Iyer,71,33,0.30,36.5,96,Heart condition,Railway Station,Central Hospital
+2025-06-15 08:05:15,A03,P-003,Meera Iyer,138,10,0.10,36.8,89,Heart condition,Railway Station,Central Hospital
+2025-06-15 08:06:00,A03,P-003,Meera Iyer,142,8,0.05,36.9,87,Heart condition,Railway Station,Central Hospital
+2025-06-15 08:07:00,A03,P-003,Meera Iyer,135,9,0.08,36.8,88,Heart condition,Railway Station,Central Hospital
+2025-06-15 08:00:00,B12,P-012,Alex Kumar,75,50,0.40,36.5,99,None,City Center Bus Depot,Central Hospital
+2025-06-15 08:01:00,B12,P-012,Alex Kumar,76,48,0.50,36.5,99,None,City Center Bus Depot,Central Hospital
+2025-06-15 08:02:00,B12,P-012,Alex Kumar,74,51,0.30,36.5,99,None,City Center Bus Depot,Central Hospital
+2025-06-15 08:03:00,B12,P-012,Alex Kumar,76,49,0.40,36.5,99,None,City Center Bus Depot,Central Hospital
+2025-06-15 08:04:00,B12,P-012,Alex Kumar,77,47,0.50,36.5,98,None,City Center Bus Depot,Central Hospital
+2025-06-15 08:05:15,B12,P-012,Alex Kumar,92,35,1.50,36.6,98,None,City Center Bus Depot,Central Hospital
+2025-06-15 08:06:00,B12,P-012,Alex Kumar,85,40,1.00,36.6,98,None,City Center Bus Depot,Central Hospital
+2025-06-15 08:07:00,B12,P-012,Alex Kumar,80,45,0.60,36.5,99,None,City Center Bus Depot,Central Hospital
+2025-06-15 08:00:00,C05,P-020,Sanjay Nair,82,38,0.30,36.7,97,Diabetes (Type 2),Market Road,Community Clinic
+2025-06-15 08:01:00,C05,P-020,Sanjay Nair,84,36,0.40,36.7,97,Diabetes (Type 2),Market Road,Community Clinic
+2025-06-15 08:02:00,C05,P-020,Sanjay Nair,81,39,0.20,36.7,97,Diabetes (Type 2),Market Road,Community Clinic
+2025-06-15 08:03:00,C05,P-020,Sanjay Nair,83,37,0.30,36.7,96,Diabetes (Type 2),Market Road,Community Clinic
+2025-06-15 08:04:00,C05,P-020,Sanjay Nair,85,35,0.40,36.7,96,Diabetes (Type 2),Market Road,Community Clinic
+2025-06-15 08:05:15,C05,P-020,Sanjay Nair,115,20,1.80,37.0,94,Diabetes (Type 2),Market Road,Community Clinic
+2025-06-15 08:06:00,C05,P-020,Sanjay Nair,108,23,1.20,36.9,95,Diabetes (Type 2),Market Road,Community Clinic
+2025-06-15 08:07:00,C05,P-020,Sanjay Nair,102,25,0.90,36.8,95,Diabetes (Type 2),Market Road,Community Clinic
+2025-06-15 08:00:00,D08,P-031,Asha Devi,78,30,0.20,36.3,96,Migraine and Hypertension,Old Town,City Center
+2025-06-15 08:01:00,D08,P-031,Asha Devi,80,29,0.30,36.3,96,Migraine and Hypertension,Old Town,City Center
+2025-06-15 08:02:00,D08,P-031,Asha Devi,77,31,0.20,36.3,96,Migraine and Hypertension,Old Town,City Center
+2025-06-15 08:03:00,D08,P-031,Asha Devi,79,30,0.20,36.4,96,Migraine and Hypertension,Old Town,City Center
+2025-06-15 08:04:00,D08,P-031,Asha Devi,81,28,0.30,36.4,95,Migraine and Hypertension,Old Town,City Center
+2025-06-15 08:05:15,D08,P-031,Asha Devi,55,12,0.02,36.1,88,Migraine and Hypertension,Old Town,City Center
+2025-06-15 08:06:00,D08,P-031,Asha Devi,52,10,0.01,36.0,86,Migraine and Hypertension,Old Town,City Center
+2025-06-15 08:07:00,D08,P-031,Asha Devi,54,11,0.02,36.0,87,Migraine and Hypertension,Old Town,City Center

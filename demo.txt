@@ -1,0 +1,214 @@
+Smart Bus Accident & Passenger Health Monitoring System
+An IoT-Based Human-Aware Emergency Response Framework with Edge Intelligence
+1. Abstract
+
+In modern public transportation systems, emergency response to bus accidents is largely dependent on vehicle-level indicators such as impact severity and location, with little to no awareness of the physiological condition of passengers. This lack of passenger-specific insight leads to delayed, generalized, and often inefficient medical intervention. This project presents a Smart Bus Accident & Passenger Health Monitoring System that integrates IoT-based accident detection, wearable health monitoring, edge intelligence, and cloud-based data services to enable real-time, passenger-wise health assessment during bus accidents.
+
+The system combines a bus-mounted IoT unit for detecting collisions and hazardous events with smartwatch-based continuous monitoring of passenger vitals including heart rate, heart rate variability (HRV), and motion patterns. A local edge intelligence module running on a gateway device interprets these signals in real time and classifies passenger conditions as Normal, Panic, or Critical. Structured health summaries are transmitted to a backend and cloud infrastructure, enabling emergency services to receive actionable intelligence for prioritized medical response. The proposed framework demonstrates a scalable, privacy-aware, and human-centric approach to smart transportation safety.
+
+2. Introduction
+
+Public buses are a critical component of urban mobility, transporting large populations daily. Despite improvements in vehicle safety and traffic monitoring, bus accidents continue to pose significant risks due to the absence of passenger-specific health information during emergencies. Existing systems focus primarily on detecting accidents at the vehicle level and notifying authorities, without assessing how passengers are physically affected.
+
+During a bus accident, emergency responders face critical uncertainties regarding the number of injured passengers, severity of injuries, and prioritization of medical care. Without real-time passenger health data, response efforts remain reactive and non-optimal. This project addresses this gap by introducing a human-aware emergency response system that couples accident detection with continuous passenger health monitoring and intelligent data interpretation.
+
+3. Problem Statement
+
+Current bus safety and emergency response systems suffer from the following limitations:
+
+Accident detection is limited to vehicle-level events
+
+No real-time assessment of individual passenger health
+
+Emergency responders lack actionable severity information
+
+Medical resources are deployed without prioritization
+
+Systems rely heavily on manual reporting and delayed observation
+
+These limitations result in delayed intervention, inefficient resource allocation, and increased risk to passenger safety.
+
+4. Proposed Solution
+
+The proposed system introduces a Smart Bus Accident & Passenger Health Monitoring System that integrates IoT, wearable technology, edge intelligence, and cloud services to provide real-time insight into passenger conditions during accidents.
+
+Key objectives include:
+
+Detecting bus accidents reliably using IoT sensors
+
+Monitoring passenger health continuously using wearables
+
+Interpreting health data in context using edge intelligence
+
+Transmitting structured passenger severity data to cloud services
+
+Enabling faster and prioritized emergency response
+
+5. System Architecture Overview
+
+The system follows a four-layer architecture:
+
+Bus Accident Detection Layer
+
+Passenger Health Monitoring Layer
+
+Local Intelligence & Gateway Layer
+
+Backend, Cloud & Emergency Response Layer
+
+Each layer operates independently while contributing to a unified emergency response pipeline.
+
+6. System Components
+6.1 Bus Accident Detection Unit
+
+Installed within the bus, this unit continuously monitors vehicle dynamics and safety conditions.
+
+Hardware Components:
+
+ESP32 microcontroller
+
+IMU (accelerometer and gyroscope)
+
+Alcohol sensor
+
+SOS push button
+
+Bluetooth Low Energy (BLE) module
+
+Vehicle-powered DC supply
+
+Functions:
+
+Detect collisions, rollovers, and sudden deceleration
+
+Monitor driver alcohol presence
+
+Allow manual emergency triggering
+
+Transmit accident context to gateway devices
+
+6.2 Passenger Health Monitoring Unit
+
+Each passenger is associated with a seat inside the bus and monitored using a smartwatch.
+
+Wearable Sensors:
+
+Heart rate sensor
+
+Heart rate variability (HRV)
+
+Motion sensors
+
+These signals provide indicators of stress, panic, shock, abnormal physiological response, or loss of movement.
+
+Gateway Device:
+
+Passenger smartphone
+
+Receives wearable data via BLE
+
+Acts as a computation and communication gateway
+
+7. Local Intelligence & Gateway Layer
+
+This layer hosts edge intelligence responsible for real-time reasoning and decision support.
+
+Role of Edge Intelligence
+
+Correlates accident events with passenger health data
+
+Interprets sensor patterns in real-world context
+
+Classifies passenger condition into:
+
+Normal
+
+Panic
+
+Critical
+
+Generates structured summaries describing observed conditions
+
+This processing is performed locally to ensure low latency, high reliability, and privacy preservation.
+
+8. Backend & Cloud Infrastructure
+
+The backend and cloud layers provide centralized data management, visualization, and emergency coordination.
+
+Backend Services
+
+RESTful APIs for receiving accident and passenger health summaries
+
+Data validation and aggregation
+
+Interface between gateway devices and cloud storage
+
+Cloud Services
+
+Persistent storage of accident events and passenger severity data
+
+Historical analysis and visualization support
+
+Integration with emergency response systems
+
+Only structured and relevant data is transmitted, avoiding continuous raw sensor streaming.
+
+9. Mobile Application
+
+The mobile application serves as both a passenger interface and a gateway control interface.
+
+Seat-Based Identification
+
+At application startup, the passenger’s seat number is clearly displayed (e.g., Seat B12), as seat location is used to identify and track passengers during emergencies.
+
+Core Screens
+
+Passenger Setup / Seat Information Screen
+
+Dashboard Screen (bus status and health summary)
+
+Passenger Health Details Screen
+
+Emergency Alert Screen
+
+The application presents health status, accident alerts, and emergency notifications in a clear and accessible manner.
+
+10. System Operation Flow
+
+Continuous monitoring of passenger health and bus motion
+
+Accident detected by bus-mounted IoT unit
+
+Edge intelligence processes passenger health data
+
+Passenger conditions classified in real time
+
+Structured summaries sent to backend and cloud
+
+Emergency services receive prioritized passenger severity reports
+
+11. Key Innovations and Contributions
+
+Human-centric emergency response model
+
+Integration of IoT, wearables, edge intelligence, and cloud services
+
+Seat-based passenger identification
+
+Passenger-wise health severity assessment
+
+Real-time, privacy-aware data processing
+
+Scalable and extensible smart transportation architecture
+
+12. Scope and Assumptions
+
+Passengers possess compatible smartwatches
+
+System provides severity indication, not medical diagnosis
+
+Designed as a real, deployable smart transportation framework
+
+13. Conclusion
+
+This project presents a comprehensive smart transportation safety system that transforms traditional accident detection into a human-aware emergency response framework. By combining IoT sensors, wearable health monitoring, edge intelligence, and cloud infrastructure, the system enables real-time passenger health assessment and prioritized emergency response. The proposed architecture demonstrates how intelligent, edge-first systems can significantly enhance safety outcomes in public transportation.

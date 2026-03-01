@@ -1,0 +1,133 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Literature Review: Smart Bus Accident \& Passenger Health Monitoring\\
+Public Transport Emergency Intelligence with Edge AI}
+
+\author{%
+    \IEEEauthorblockN{Tanguturi Sharani}
+    \IEEEauthorblockA{\textit{School of Electronics Engineering}\\
+    \textit{Vellore Institute of Technology}\\
+    Chennai, India\\
+    22MIS1154@vitstudent.ac.in}
+    \and
+    \IEEEauthorblockN{Kakarala Sreevallabh}
+    \IEEEauthorblockA{\textit{School of Computer Science}\\
+    \textit{Vellore Institute of Technology}\\
+    Chennai, India\\
+    sreevallabh.2022@vitstudent.ac.in}%
+}
+
+\maketitle
+
+\begin{abstract}
+This literature review surveys research aligned with the Smart Bus Accident \& Passenger Health Monitoring System. It covers IoT-based accident detection for smart vehicles and buses, wearable health monitoring for emergency prevention, IMU and ESP32-based crash detection, edge intelligence for emergency networks, BLE-based in-vehicle sensing, and the integration of IoT, edge computing, and large language models for crisis management. Fifteen IEEE and related publications are reviewed and synthesized to position our project within the state of the art.
+\end{abstract}
+
+\begin{IEEEkeywords}
+literature review, smart bus, accident detection, passenger health monitoring, IoT, edge intelligence, wearable sensing, emergency response
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Public transport safety and human-aware emergency response have gained sustained attention in smart cities and IoT research. This review organizes recent work into five themes: (A) IoT-based accident detection and bus safety systems, (B) wearable and physiological monitoring for passengers, (C) IMU and embedded crash detection, (D) edge intelligence and real-time emergency systems, (E) in-vehicle communication and health monitoring, and (F) crisis management with IoT, edge, and LLMs. The goal is to situate our Smart Bus Accident \& Passenger Health Monitoring System within this body of work.
+
+\section{IoT-Based Accident Detection and Bus Safety}
+
+Bus management and road accident prevention in smart cities have been addressed by several IEEE works. \cite{ieee_bus_mgmt} present a system for bus management and road accident prevention tailored to smart city infrastructure, integrating monitoring and alerting to improve safety. \cite{ieee_comprehensive_iot_accident} provide a comprehensive study of IoT-based accident detection systems for smart vehicles, discussing architectures, sensors, and communication paradigms that are directly relevant to bus-mounted detection units. \cite{ieee_iot_accident_emergency} focus on an IoT-based smart accident detection and emergency response system for vehicles, emphasizing real-time detection and automated notification. \cite{ieee_rfid_bus_door} describe an RFID-based automated bus door system with emergency alert and seat monitoring, linking passenger presence and seat-level data to safety and evacuation support. Together, these works establish that IoT sensor fusion, real-time alerts, and integration with transport infrastructure are central to modern bus safety systems.
+
+\section{Wearable and Physiological Monitoring}
+
+Wearable devices for preventing accidents caused by medical emergencies and for tracking passenger health are reported in IEEE literature. \cite{ieee_smart_wearable_medical} present a smart wearable device aimed at preventing accidents caused by medical emergencies, using physiological signals to trigger alerts or countermeasures. \cite{ieee_wearable_jacket} describe an IoT-enabled wearable technology jacket for tracking patient health and safety, illustrating how wearables can stream vital data to gateways. Stress and physiological state inference from wearables are treated by \cite{ieee_hrv_stress_wearable}, who report a heart-rate variability based stress assessment case study for wearable platforms, and by \cite{ieee_esp32_stress}, who use low-cost IoT devices (ESP32 and MAX30102) to analyze heart rate variability. These papers support the use of HR, HRV, and related biomarkers—as in our passenger health layer—for stress and emergency detection.
+
+\section{IMU and Embedded Crash Detection}
+
+Crash detection using inertial sensors and embedded platforms is well represented. \cite{ieee_crash_imu} address crash detection using IMU sensors, providing a foundation for impact and rollover detection via accelerometer and gyroscope data. \cite{ieee_esp32_deep} combine ESP32 and deep learning for advanced collision and obstruction detection and prevention, showing that low-cost microcontrollers can support both classical and learning-based detection. These align with our use of an ESP32 and IMU (e.g., MPU6050) for the bus accident detection layer.
+
+\section{Edge Intelligence and Real-Time Emergency Systems}
+
+Edge intelligence for emergency and mission-critical networks is discussed in several IEEE publications. \cite{ieee_edge_mission} present edge intelligence for mission cognitive wireless emergency networks, highlighting the role of edge processing in latency-sensitive emergency scenarios. \cite{ieee_portable_edge_disaster} describe a portable and elastic edge computing network for disaster first responders, emphasizing deployable edge infrastructure. \cite{ieee_realtime_iot_safety} report on developing real-time IoT-based public safety alert and emergency response systems, with metrics on latency and reliability. These support our design choice of processing sensor and health data at the gateway and using cloud APIs only for higher-level reasoning.
+
+\section{In-Vehicle Communication and Health Monitoring}
+
+Bluetooth Low Energy and intra-vehicle protocols for health and diagnostics appear in IEEE. \cite{ieee_ble_automobile} design an automobile intelligence control platform based on Bluetooth low energy. \cite{ieee_ble_intra_vehicle} propose a BLE-based communication framework for intra-vehicle wireless sensor networks. \cite{ieee_intra_vehicular_iot} discuss intra-vehicular communication protocols for IoT-enabled vehicle health monitoring systems, including challenges and solutions. These works justify the use of BLE for smartwatch-to-smartphone and bus-unit-to-gateway links in our connectivity model.
+
+\section{Crisis Management with IoT, Edge, and LLMs}
+
+Recent work combines IoT, edge computing, and large language models for crisis and emergency management. \cite{ieee_crisis_iot_edge_llm} discuss crisis management in the era of IoT, edge computing, and LLMs, positioning LLMs as a decision-support layer over sensor and edge data. \cite{ieee_urban_emergency_llm} present intelligent urban emergency response integrating large language models with multi-objective optimization and reinforcement learning. These papers align with our use of a cloud-hosted LLM (Gemini) to interpret accident and passenger health data and to produce structured triage summaries.
+
+\section{Summary and Relation to Our Project}
+
+The reviewed literature shows a clear trend toward integrating vehicle-level accident detection, passenger-level physiological monitoring, edge or gateway-level processing, and intelligent decision support. Our system draws on IoT accident detection \cite{ieee_bus_mgmt,ieee_comprehensive_iot_accident,ieee_iot_accident_emergency}, wearable health and stress assessment \cite{ieee_smart_wearable_medical,ieee_wearable_jacket,ieee_hrv_stress_wearable,ieee_esp32_stress}, IMU and ESP32-based crash detection \cite{ieee_crash_imu,ieee_esp32_deep}, edge and real-time emergency systems \cite{ieee_edge_mission,ieee_portable_edge_disaster,ieee_realtime_iot_safety}, BLE and in-vehicle protocols \cite{ieee_ble_automobile,ieee_ble_intra_vehicle,ieee_intra_vehicular_iot}, and LLM-assisted crisis management \cite{ieee_crisis_iot_edge_llm,ieee_urban_emergency_llm}. The present project contributes a unified bus-focused architecture with CSV-replayed sensor and health data and Gemini-based passenger severity classification, filling a gap between generic vehicle safety and human-aware public transport emergency intelligence.
+
+\begin{thebibliography}{00}
+
+\bibitem{ieee_bus_mgmt}
+IEEE, ``Bus Management \& Road Accident Prevention System for Smart Cities,'' IEEE Conference Publication, 2020. [Online]. Available: IEEE Xplore document 9392747.
+
+\bibitem{ieee_comprehensive_iot_accident}
+IEEE, ``A Comprehensive Study on IoT Based Accident Detection Systems for Smart Vehicles,'' IEEE Journals \& Magazine, 2020. [Online]. Available: IEEE Xplore document 9133106.
+
+\bibitem{ieee_iot_accident_emergency}
+IEEE, ``IoT based Smart Accident Detection and Emergency Response System for Vehicles,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore document 10846091.
+
+\bibitem{ieee_rfid_bus_door}
+IEEE, ``RFID-Based Automated Bus Door System with Emergency Alert and Seat Monitoring,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore document 10862724.
+
+\bibitem{ieee_smart_wearable_medical}
+IEEE, ``Smart Wearable Device to Prevent Accidents Caused by Medical Emergencies,'' IEEE Conference Publication, 2023. [Online]. Available: IEEE Xplore document 10084266.
+
+\bibitem{ieee_wearable_jacket}
+IEEE, ``IoT Enabled Wearable Technology Jacket for Tracking Patient Health and Safety System,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore document 10391431.
+
+\bibitem{ieee_hrv_stress_wearable}
+IEEE, ``Heart Rate Variability Based Stress Assessment: A Case Study for Wearable Platforms,'' IEEE Conference Publication, 2020. [Online]. Available: IEEE Xplore document 9302404.
+
+\bibitem{ieee_esp32_stress}
+IEEE, ``Accurate Stress Detection for Developers: Leveraging Low-Cost IoT Devices (ESP32 and MAX30102) to Analyze Heart Rate Variability,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore document 10417345.
+
+\bibitem{ieee_crash_imu}
+IEEE, ``Crash Detection Using IMU Sensors,'' IEEE Conference Publication, 2017. [Online]. Available: IEEE Xplore document 7968631.
+
+\bibitem{ieee_esp32_deep}
+IEEE, ``Advanced Collision and Obstruction Detection and Prevention using ESP-32 \& Deep Learning,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore document 10405347.
+
+\bibitem{ieee_edge_mission}
+IEEE, ``Edge Intelligence for Mission Cognitive Wireless Emergency Networks,'' IEEE Journals \& Magazine, 2020. [Online]. Available: IEEE Xplore document 9083671.
+
+\bibitem{ieee_portable_edge_disaster}
+IEEE, ``A Portable and Elastic Edge Computing Network for Disaster First Responders,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore document 10936663.
+
+\bibitem{ieee_realtime_iot_safety}
+H. Zhang, R. Zhang, and J. Sun, ``Developing real-time IoT-based public safety alert and emergency response systems,'' \textit{Scientific Reports}, vol. 15, 2025. [Online]. Available: \url{https://www.nature.com/articles/s41598-025-13465-7}
+
+\bibitem{ieee_ble_automobile}
+IEEE, ``Design of automobile intelligence control platform based on Bluetooth low energy,'' IEEE Conference Publication, 2016. [Online]. Available: IEEE Xplore document 7848552.
+
+\bibitem{ieee_ble_intra_vehicle}
+IEEE, ``Bluetooth Low Energy based Communication Framework for Intra Vehicle Wireless Sensor Networks,'' IEEE Conference Publication, 2017. [Online]. Available: IEEE Xplore document 8261007.
+
+\bibitem{ieee_intra_vehicular_iot}
+IEEE, ``Intra-Vehicular Communication Protocol for IoT Enabled Vehicle Health Monitoring System: Challenges, Issues, and Solutions,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore document 10587237.
+
+\bibitem{ieee_crisis_iot_edge_llm}
+IEEE, ``Crisis Management in the Era of the IoT, Edge Computing, and LLMs,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore document 10710254.
+
+\bibitem{ieee_urban_emergency_llm}
+IEEE, ``Intelligent Urban Emergency Response: Integrating Large Language Models, Multi-Objective Optimization, and Reinforcement Learning,'' IEEE Conference Publication, 2024. [Online]. Available: IEEE Xplore.
+
+\end{thebibliography}
+
+\end{document}

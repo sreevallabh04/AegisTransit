@@ -1,0 +1,434 @@
+Smart Bus Accident & Passenger
+Health Monitoring System
+Components & Connectivity Document
+Course Code: ECE3502
+IoT Domain Analyst
+Review 1
+Team Members
+Name Registration Number
+Tanguturi Sharani 22MIS1154
+Sreevallabh 22MIS1170
+ECE3502 IoT Domain Analyst Review 1
+Contents
+1 Introduction 3
+1.1 Background and Motivation . . . . . . . . . . . . . . . . . . . . . . . . . 3
+1.2 The Human-Aware Emergency Response Gap . . . . . . . . . . . . . . . 3
+1.3 Project Vision and Approach . . . . . . . . . . . . . . . . . . . . . . . . 4
+1.4 Key Innovation and Contribution . . . . . . . . . . . . . . . . . . . . . . 4
+1.5 Scope and Document Organization . . . . . . . . . . . . . . . . . . . . . 5
+2 System Components 6
+2.1 Layer 1: Bus Accident Detection Unit . . . . . . . . . . . . . . . . . . . . 6
+2.1.1 Hardware Components . . . . . . . . . . . . . . . . . . . . . . . . 6
+2.1.2 Data Transmitted . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+2.2 Layer 2: Passenger Health Monitoring Unit . . . . . . . . . . . . . . . . . 7
+2.2.1 Wearable Device . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+2.2.2 Data Collected . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+2.2.3 Gateway Device (Passenger Smartphone) . . . . . . . . . . . . . . 7
+2.3 Layer 3: Local Intelligence & Gateway Layer (Core Innovation) . . . . . 8
+2.3.1 Role of the Local LLM . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.3.2 Inputs to the Local LLM . . . . . . . . . . . . . . . . . . . . . . . 8
+2.3.3 Why Local LLM? (Edge Intelligence Benefits) . . . . . . . . . . . 9
+2.4 Layer 4: Central Monitoring & Emergency Response System . . . . . . . 9
+2.4.1 Hardware / Software . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.4.2 Emergency Response Interface . . . . . . . . . . . . . . . . . . . . 9
+3 Connectivity Architecture 11
+3.1 Connectivity Layer 1: Smartwatch → Passenger Smartphone . . . . . . . 11
+3.2 Connectivity Layer 2: Bus Unit → Gateway Devices . . . . . . . . . . . . 11
+3.3 Connectivity Layer 3: Gateway Devices → Central Monitoring Unit . . . 11
+3.4 Connectivity Layer 4: Emergency Alert Transmission . . . . . . . . . . . 12
+4 System Architecture 13
+5 System Data Flow & Operational Sequence 14
+5.1 Continuous Monitoring Phase (Pre-Accident) . . . . . . . . . . . . . . . . 14
+5.2 Accident Detection & Response Phase . . . . . . . . . . . . . . . . . . . 14
+5.3 Key Data Flow Principle . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+6 System Outcomes & Benefits 15
+6.1 Primary Outcomes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+6.2 Edge Intelligence Benefits . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+6.3 Design Principles Demonstrated . . . . . . . . . . . . . . . . . . . . . . . 16
+6.4 Intended Outcome . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+1
+ECE3502 IoT Domain Analyst Review 1
+Abstract
+In current public transportation systems, emergency response to bus accidents
+relies primarily on basic information such as accident location and vehicle damage
+severity, with no real-time insight into the physiological condition of passengers.
+This limitation results in delayed and unprioritized medical response, leading to
+preventable fatalities. This project presents a Smart Bus Accident & Passenger
+Health Monitoring System with Local Edge Intelligence that addresses this critical
+gap by integrating IoT-based vehicle accident detection, wearable health monitoring, and local AI-powered decision support.
+The proposed system combines bus-mounted sensors (ESP32 microcontroller
+with IMU, alcohol sensor, and SOS trigger) with smartwatch-based continuous
+health monitoring (heart rate, HRV, and motion patterns). A lightweight local
+language model (LLM) deployed at the edge gateway interprets sensor patterns
+in context and classifies passenger conditions in real-time as Normal, Panic, or
+Critical. This edge intelligence layer reduces raw sensor data into actionable emergency insights without relying on cloud infrastructure, ensuring low latency, privacy
+preservation, and operation even without internet connectivity.
+The system architecture employs a four-layer model: accident detection, health
+monitoring, local intelligence gateway, and emergency response. Connectivity uses
+Bluetooth Low Energy (BLE) for local sensor communication, Wi-Fi for aggregation, and cellular networks for emergency dispatch. Designed with principles of
+human-centric safety, edge-first processing, real-time operation, and privacy-aware
+design, this prototype demonstrates a functional IoT framework for transforming
+post-accident emergency response in public transportation systems.
+Keywords: IoT, Edge Intelligence, Local LLM, Passenger Health Monitoring,
+Bus Safety, Emergency Response, Wearable Technology, ESP32, BLE Communication, Smart Transportation
+2
+ECE3502 IoT Domain Analyst Review 1
+1 Introduction
+1.1 Background and Motivation
+Public transportation safety remains a critical concern in modern urban infrastructure,
+with bus accidents posing significant risks to passenger lives and well-being. Traditional
+emergency response systems for vehicular accidents operate on a reactive model that
+relies heavily on basic incident information such as location coordinates, estimated vehicle
+damage, and occasionally, the number of passengers involved. However, this approach
+suffers from a fundamental limitation: the absence of real-time insight into the actual
+physiological and physical condition of individual passengers.
+When a bus accident occurs, emergency medical services face critical uncertainties.
+How many passengers are injured? Who requires immediate life-saving intervention?
+Who is experiencing severe panic or shock? Who appears stable and can wait for secondary medical attention? Without answers to these questions, medical response becomes
+generalized rather than prioritized, often resulting in delayed treatment for critical cases
+and inefficient allocation of limited emergency resources. Studies have shown that the
+critical ”golden hour” following traumatic incidents is decisive for survival rates, making
+every minute of delay potentially fatal.
+Existing systems are vehicle-centric, focusing on what happened to the vehicle rather
+than the human impact of the accident. Emergency responders lack visibility into passenger condition, and panic, shock, or loss of consciousness in passengers goes unnoticed
+until physical arrival at the scene.
+1.2 The Human-Aware Emergency Response Gap
+The core problem addressed by this project is the disconnect between accident detection
+and human impact assessment. Current systems can detect that an accident has occurred
+through sensors, cameras, or manual reporting, but they cannot assess how passengers
+are physiologically responding to the trauma. An accident’s severity from a vehicular
+standpoint does not necessarily correlate with the medical severity experienced by passengers. Minor collisions can cause severe injuries to vulnerable individuals, while major
+impacts might leave some passengers relatively unharmed.
+This information gap has profound consequences. Emergency dispatchers must make
+resource allocation decisions with incomplete information. Paramedics arrive at accident
+scenes without knowing which passengers need immediate attention. Hospitals receive
+patients without advance notice of their conditions. The entire emergency response chain
+operates reactively rather than intelligently.
+Furthermore, even when raw sensor data from wearables is available, it cannot be
+directly interpreted by emergency systems. Raw heart rate values, motion patterns, and
+variability metrics require contextual reasoning—understanding what these signals mean
+in the context of an accident event. Traditional cloud-based processing introduces latency
+and dependency on network connectivity, which may be unreliable during emergencies.
+There is a need for local edge intelligence that can reason about passenger condition in
+real time, without external dependencies.
+3
+ECE3502 IoT Domain Analyst Review 1
+1.3 Project Vision and Approach
+This project proposes a paradigm shift toward a human-aware emergency response system
+with local edge intelligence for public transportation. By integrating IoT-based accident
+detection with continuous passenger health monitoring through wearable technology and
+on-device AI reasoning, the system creates a real-time physiological awareness layer that
+transforms how emergency services respond to bus accidents.
+The system is built on a four-layer architecture:
+1. Bus Accident Detection Layer: An ESP32-based IoT system installed in the
+bus that monitors vehicle motion (collision, rollover, sudden deceleration), driver
+safety compliance (alcohol detection), and manual emergency triggers.
+2. Passenger Health Monitoring Layer: Leverages consumer wearable devices
+(Apple Watch) that passengers already possess to continuously monitor heart rate,
+heart rate variability, and motion patterns, computing real-time stress and health
+scores.
+3. Local Intelligence & Gateway Layer: A lightweight local language model
+(LLM) runs on gateway devices (passenger smartphones or bus gateway tablet) to
+interpret sensor patterns in context, classify passenger conditions (Normal, Panic,
+Critical), and generate structured summaries. This edge intelligence operates without cloud dependency, ensuring low latency, privacy preservation, and reliability
+even without internet connectivity.
+4. Emergency Response Layer: Transmits structured, actionable information to
+emergency services, including passenger-wise severity reports enabling prioritized
+medical triage.
+1.4 Key Innovation and Contribution
+The fundamental innovation of this system lies in its integration of three critical capabilities: accident detection, individual passenger physiological monitoring, and local edge
+intelligence for contextual reasoning. Rather than treating passengers as an undifferentiated group or sending raw sensor data to the cloud, the system uses a lightweight local
+LLM to interpret health patterns in the context of the accident event, providing granular,
+person-level severity assessments.
+The local LLM does not perform medical diagnosis. Instead, it acts as a decisionsupport and reasoning layer that:
+• Interprets sensor patterns (e.g., ”abnormal HR spike with no motion detected for
+30 seconds”)
+• Classifies passenger conditions based on physiological and motion context
+• Generates short, structured summaries rather than overwhelming raw data
+• Operates entirely at the edge with no cloud dependency
+This edge-first approach enables:
+4
+ECE3502 IoT Domain Analyst Review 1
+• Prioritized Medical Response: Emergency services can identify critical patients
+before arrival
+• Optimized Resource Allocation: Ambulances and medical personnel can be
+deployed based on actual need
+• Improved Survival Rates: Faster identification and treatment of life-threatening
+conditions
+• Privacy Preservation: Sensitive health data remains local and is never transmitted in raw form
+• Low Latency: Real-time processing without network round-trips
+• Reliability: System operates even without internet connectivity
+1.5 Scope and Document Organization
+This document presents the technical architecture, component specifications, and connectivity framework for the Smart Bus Accident & Passenger Health Monitoring System
+with Local Edge Intelligence, developed as part of the ECE3502 IoT Domain Analyst
+course. The system is designed as a functional academic prototype demonstrating the
+feasibility and potential of integrating wearable health technology, IoT sensors, and edge
+AI for transportation safety.
+Scope and Constraints:
+• Assumes availability of passenger smartwatches
+• Does not attempt medical diagnosis—provides severity indication only
+• Designed as an academic IoT system with practical feasibility
+• Prioritizes local processing first, cloud second (edge-first architecture)
+The remainder of this document is organized as follows: Section 2 details the system
+components including bus-mounted hardware, wearable devices, local intelligence layer,
+and monitoring infrastructure. Section 3 presents the connectivity architecture and communication protocols. Section 4 describes the system architecture and operational data
+flow. Section 5 outlines the expected outcomes and benefits of the proposed system.
+This project represents a step toward making emergency response systems not just
+faster, but smarter, more human-centered, and privacy-aware through edge intelligence.
+
+ECE3502 IoT Domain Analyst Review 1
+2 System Components
+The system is composed of four tightly integrated layers, each with specific responsibilities
+in the emergency response pipeline.
+2.1 Layer 1: Bus Accident Detection Unit
+2.1.1 Hardware Components
+The bus accident detection unit is installed inside the bus and continuously monitors
+motion and safety conditions using IoT sensors. This layer detects:
+• Sudden collisions
+• Rollovers
+• Sharp deceleration
+• Manual SOS triggers
+• Driver alcohol presence
+Hardware Components:
+• ESP32 Microcontroller – Central processing unit for accident detection and communication
+• IMU Sensor (Accelerometer + Gyroscope) – Detects collision, rollover, and
+sudden deceleration events through motion pattern analysis
+• Alcohol Sensor – Monitors driver alcohol levels for safety compliance
+• SOS Push Button – Provides manual emergency trigger capability for driver or
+passengers
+• BLE Module – Built-in with ESP32 for wireless communication with gateway devices
+• Power Supply – Powered by bus battery with DC regulator for stable operation
+2.1.2 Data Transmitted
+The bus unit communicates accident-related events including:
+• Accident detection status (collision detected / rollover detected / sharp brake)
+• Time since accident
+• SOS trigger status
+• Alcohol detection alerts
+6
+ECE3502 IoT Domain Analyst Review 1
+2.2 Layer 2: Passenger Health Monitoring Unit
+Each passenger is assumed to wear a smartwatch (Apple Watch in the prototype) that
+continuously collects physiological and motion data. These metrics act as indicators of
+panic, shock, abnormal physiological response, or possible injury/unconsciousness.
+2.2.1 Wearable Device
+Apple Watch—Continuous Health Monitoring
+• Heart Rate Sensor – Continuous beats per minute (BPM) monitoring
+• Heart Rate Variability (HRV) – Measures variation in time intervals between
+heartbeats (indicator of stress and autonomic response)
+• Motion Sensors (Accelerometer, Gyroscope) – Detects motion patterns
+and immobility
+• On-device Computation – Calculates stress scores and health profiles locally
+2.2.2 Data Collected
+From these signals, a health and stress profile is computed locally on the smartwatch,
+including:
+• Real-time heart rate (BPM)
+• Heart rate variability (HRV) trends
+• Motion state (active / stationary / immobile for extended duration)
+• Sudden physiological changes (HR spikes, HRV drops)
+2.2.3 Gateway Device (Passenger Smartphone)
+Passenger iPhone—Local Gateway
+• Receives real-time health data from Apple Watch via Bluetooth Low Energy
+• Acts as local gateway to bus system
+• Hosts the local LLM for edge intelligence processing
+• Performs health status classification and reasoning
+The smartwatch transmits health data to the passenger’s smartphone, which acts as
+the local gateway and intelligence layer.
+7
+ECE3502 IoT Domain Analyst Review 1
+2.3 Layer 3: Local Intelligence & Gateway Layer (Core Innovation)
+This layer is the core intelligence of the system. A lightweight local language model
+(LLM) runs on gateway devices (passenger smartphone or bus gateway tablet) to perform
+edge-based reasoning and decision support.
+2.3.1 Role of the Local LLM
+What the Local LLM Does
+The local LLM does not perform medical diagnosis. Instead, it acts as a decisionsupport and reasoning layer that:
+• Interprets sensor patterns in context – Understands what health metrics
+mean given that an accident has occurred
+• Classifies passenger condition into three categories:
+– Normal – Stable vital signs, responsive
+– Panic – Elevated heart rate, high stress indicators
+– Critical – Abnormal patterns suggesting injury or unconsciousness
+• Generates structured summaries such as:
+– ”Abnormal HR spike with no motion detected for 30 seconds”
+– ”Prolonged immobility with dropping HRV”
+• Reduces raw sensor data into actionable emergency insights
+2.3.2 Inputs to the Local LLM
+• Accident detection status from the bus unit (collision/rollover/sharp brake)
+• Time since accident
+• Passenger health metrics:
+– Heart rate trends (sudden spikes, drops, or sustained abnormality)
+– HRV changes (indicators of stress or autonomic dysfunction)
+– Motion state (active, stationary, prolonged immobility)
+8
+ECE3502 IoT Domain Analyst Review 1
+2.3.3 Why Local LLM? (Edge Intelligence Benefits)
+Advantages of Edge Processing
+• Low Latency – Real-time response without network round-trips
+• Works Offline – Operates even without internet connectivity
+• Privacy Preservation – Sensitive health data stays local, never transmitted in
+raw form
+• Reduced Bandwidth – Only structured summaries are sent, not continuous
+raw data
+• No Cloud Dependency – Avoids reliance on external infrastructure during
+emergencies
+All reasoning happens at the edge, and only summarized outputs are transmitted to
+emergency services.
+2.4 Layer 4: Central Monitoring & Emergency Response System
+2.4.1 Hardware / Software
+The central monitoring infrastructure includes:
+• Gateway Tablet / Driver Control Unit – Primary interface for real-time monitoring and local LLM execution
+• Monitoring Application featuring:
+– Passenger condition list with severity indicators
+– Severity visualization (Normal / Panic / Critical)
+– Real-time status updates
+• Cloud Server (Optional) – For logging and analytics purposes only, not required
+for emergency operation
+2.4.2 Emergency Response Interface
+When an accident is confirmed, the system:
+• Generates an emergency alert with accident details
+• Attaches a passenger-wise severity map generated by the local LLM
+• Transmits structured information rather than raw sensor data
+This allows emergency responders to:
+• Prioritize critically affected passengers
+9
+ECE3502 IoT Domain Analyst Review 1
+• Allocate medical resources efficiently
+• Reduce response time and improve survival outcomes
+• Arrive prepared with appropriate medical equipment and personnel
+10
+ECE3502 IoT Domain Analyst Review 1
+3 Connectivity Architecture
+The system employs a multi-tier connectivity model that prioritizes local processing first,
+cloud second. Communication flows from sensors to gateway devices to central monitoring
+to emergency systems.
+3.1 Connectivity Layer 1: Smartwatch → Passenger Smartphone
+Apple Watch → iPhone (Passenger-Level)
+• Connectivity: Bluetooth Low Energy (BLE)
+• Data Transmitted: Heart Rate, HRV, Motion Patterns, Stress Score
+• Frequency: Approximately every 2–3 seconds (continuous monitoring)
+• Processing: Data is received by the passenger’s iPhone, which hosts the local
+LLM
+3.2 Connectivity Layer 2: Bus Unit → Gateway Devices
+ESP32 (Bus Unit) → iPhone / Gateway Tablet
+• Connectivity: Bluetooth Low Energy (BLE)
+• Data Transmitted: Accident detection status, crash type (collision/rollover),
+alcohol detection alerts, SOS trigger status, time since accident
+• Processing: Accident context is sent to gateway devices where the local LLM
+correlates it with passenger health data
+3.3 Connectivity Layer 3: Gateway Devices → Central Monitoring Unit
+iPhone / Gateway Tablet → Central Monitoring System
+• Connectivity: Wi-Fi / Local Network
+• Data Transmitted:
+– Not raw sensor data—instead, LLM-generated passenger severity classifications
+– Structured summaries (e.g., ”Passenger 3: Critical—prolonged immobility
+with dropping HRV”)
+– Aggregated passenger-wise status map
+• Key Point: Local LLM has already processed and reduced data at the edge
+11
+ECE3502 IoT Domain Analyst Review 1
+3.4 Connectivity Layer 4: Emergency Alert Transmission
+Central Monitoring Unit → Emergency Response System
+• Connectivity: Internet / Cellular Network
+• Data Transmitted:
+– Accident alert with location details
+– Passenger-wise severity report (Normal / Panic / Critical)
+– Structured summaries from local LLM for each critical passenger
+– Recommended priority for medical response
+• Bandwidth: Minimal—only structured intelligence, not continuous raw data
+Design Principle: The system prioritizes local processing first, cloud second. All
+reasoning happens at the edge. Only structured, privacy-preserving summaries are transmitted externally.
+12
+ECE3502 IoT Domain Analyst Review 1
+4 System Architecture
+Figure 1: Smart Bus Accident & Passenger Health Monitoring System Architecture
+13
+ECE3502 IoT Domain Analyst Review 1
+5 System Data Flow & Operational Sequence
+The system operates through the following sequential data flow with local edge intelligence
+processing:
+5.1 Continuous Monitoring Phase (Pre-Accident)
+1. Apple Watch continuously monitors passenger health parameters (heart rate, HRV,
+motion)
+2. Health data transmitted to passenger iPhone via BLE every 2–3 seconds
+3. Bus-mounted ESP32 continuously monitors vehicle motion and driver safety
+4. Baseline health profiles are maintained for each passenger
+5.2 Accident Detection & Response Phase
+1. Accident Event Detected
+• Bus-mounted ESP32 detects collision, rollover, or receives SOS trigger
+• Accident status broadcast to gateway devices via BLE
+2. Local LLM Activation (Edge Intelligence)
+• Gateway devices (passenger iPhones / bus tablet) receive accident alert
+• Local LLM begins contextual reasoning
+• Correlates accident event with real-time passenger health data
+3. Passenger Condition Assessment
+• Local LLM interprets sensor patterns in accident context:
+– Heart rate spikes + prolonged immobility → possible injury
+– Elevated stress markers + active motion → panic response
+– Normal patterns + responsive motion → stable condition
+4. Classification & Summary Generation
+• Local LLM classifies each passenger into:
+– Normal – Stable vital signs, responsive
+– Panic – Elevated stress, high heart rate
+– Critical – Abnormal patterns suggesting injury/unconsciousness
+• Generates structured summaries: ”Passenger 3: Critical—abnormal HR spike
+with no motion detected for 30 seconds”
+5. Aggregation & Emergency Alert
+• Passenger-wise severity map aggregated at central monitoring unit
+• Emergency alert generated with:
+14
+ECE3502 IoT Domain Analyst Review 1
+– Accident location and type
+– Passenger severity classification
+– Structured summaries for critical cases
+– Recommended response priority
+6. Emergency Dispatch
+• Emergency alert transmitted to response services via cellular network
+• Responders receive actionable intelligence, not raw sensor data
+• Medical teams can prepare appropriate equipment and prioritize critical patients
+5.3 Key Data Flow Principle
+Edge-First Architecture
+Raw Sensor Data → Local LLM Processing (Edge) → Structured Intelligence → Emergency Services
+The local LLM reduces high-volume raw sensor streams into low-bandwidth, highvalue structured intelligence. This enables real-time operation, privacy preservation, and reliability even without internet connectivity.
+6 System Outcomes & Benefits
+6.1 Primary Outcomes
+Key Benefits of the System
+• Real-time Individual Passenger Health Visibility – Continuous monitoring
+enables immediate awareness of passenger conditions during emergencies, moving
+beyond vehicle-centric to human-aware emergency response
+• Faster, Prioritized Emergency Response – Severity classification allows
+first responders to prioritize critical cases, optimize rescue operations, and arrive
+prepared with appropriate medical equipment
+• Improved Survival Rates – Faster identification and treatment of lifethreatening conditions during the critical ”golden hour” following trauma
+• Optimized Resource Allocation – Ambulances and medical personnel can be
+deployed based on actual passenger need rather than assumptions
+• Scalable, Low-Cost IoT Architecture – Leverages existing consumer devices (Apple Watch, iPhone) combined with affordable IoT sensors (ESP32) for
+widespread deployment
+15
+ECE3502 IoT Domain Analyst Review 1
+6.2 Edge Intelligence Benefits
+Advantages of Local LLM Processing
+• Low Latency – Real-time contextual reasoning without network round-trips or
+cloud processing delays
+• Privacy Preservation – Sensitive passenger health data remains local and is
+never transmitted in raw form; only structured, privacy-preserving summaries
+are sent
+• Reliability – System operates even without internet connectivity, critical during
+infrastructure failures or emergencies
+• Reduced Bandwidth – High-volume raw sensor streams are reduced to lowbandwidth structured intelligence
+• Contextual Reasoning – Local LLM interprets sensor patterns in the context
+of the accident event, not just raw numbers
+• No Cloud Dependency – Avoids reliance on external infrastructure during
+time-critical emergencies
+6.3 Design Principles Demonstrated
+This prototype demonstrates several critical design principles for modern IoT safety systems:
+• Human-Centric Safety – Focus on passenger health and human impact, not just
+vehicle damage
+• Edge-First Architecture – Local processing first, cloud second
+• Real-Time Operation – Continuous monitoring and immediate response capability
+• Modular Architecture – Independent but cooperative system layers
+• Privacy-Aware Design – Minimal data exposure with local intelligence processing
+6.4 Intended Outcome
+The outcome is a functional and extensible IoT architecture that demonstrates how wearable health monitoring combined with local edge intelligence can significantly improve
+emergency response during public transportation accidents. This system bridges the gap
+between accident detection and human impact assessment, enabling emergency services
+to arrive not just faster, but smarter.
